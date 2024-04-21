@@ -24,6 +24,9 @@ export async function menuCadastro() {
     case "1-Cadastrar novo paciente":
       cadastrarPaciente();
       break;
+    case "2-Excluir paciente":
+      await excluirPaciente();
+      break;
     case "3-Listar pacientes (ordenado por CPF)":
       listarPacientes();
       break;
@@ -80,6 +83,27 @@ export function cadastrarPaciente() {
       mainMenu();
     });
 }
+
+export async function excluirPaciente(){
+  const resposta = await inquirer.prompt({
+    type: "input",
+    name: "cpf",
+    message: "Digite o CPF do paciente que deseja excluir: ", 
+    validate: function (cpf) {
+      if (!/^\d{11}$/.test(cpf)) {
+        return "CPF inválido. Por favor digite corretamente";
+      }
+      return true;
+    },
+  })
+  const {cpf: cpfParaExcluir} = resposta;
+  if(pacienteController.excluirPaciente(cpfParaExcluir)){
+    console.log('Paciente excluido com sucesso')
+  }else{
+    console.log("Paciente nao encontrado")
+  }
+  mainMenu()
+} 
 
 function listarPacientes() {
   pacienteController.listarPacientes();
