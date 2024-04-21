@@ -31,7 +31,7 @@ export async function menuCadastro() {
       listarPacientesPorCPF();
       break;
     case "4-Listar pacientes (ordenado por Nome)":
-      listarPacientes();
+      listarPacientesPorNome();
       break;
     case "5-Voltar p/ menu principal":
       return;
@@ -114,6 +114,12 @@ function listarPacientesPorCPF(){
   pacienteController.listarPacientesPorCPF();
   mainMenu();
 }
+
+function listarPacientesPorNome(){
+  pacienteController.listarPacientesPorNome();
+  mainMenu();
+}
+
 
 export async function menuAgenda() {
   const resposta = await inquirer.prompt({
