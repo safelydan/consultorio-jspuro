@@ -1,5 +1,8 @@
 import Paciente from "../models/Paciente.js";
-import { cadastrarPaciente, excluirPaciente } from "../view/menusIntermediarios.js";
+import {
+  cadastrarPaciente,
+  excluirPaciente,
+} from "../view/menusIntermediarios.js";
 
 class PacienteController {
   constructor() {
@@ -44,40 +47,44 @@ class PacienteController {
         `Nome: ${paciente.nome}, CPF: ${paciente.cpf}, Data de Nascimento: ${paciente.dataNascimento}`
       );
     });
-    
   }
 
-  listarPacientesPorCPF(){
-    console.log("Lista de pacientes ordenada por CPF:")
+  listarPacientesPorCPF() {
+    console.log("Lista de pacientes ordenada por CPF:");
 
-    const ordenacao = this.listaPacientes.slice().sort((a, b)=> {
-      return a.cpf.localeCompare(b.cpf)
-    }) 
-    ordenacao.forEach((paciente)=> {
-      console.log(`Nome: ${paciente.nome} CPF: ${paciente.cpf} Data de Nascimento ${paciente.dataNascimento}`)
-    })
+    const ordenacao = this.listaPacientes.slice().sort((a, b) => {
+      return a.cpf.localeCompare(b.cpf);
+    });
+    ordenacao.forEach((paciente) => {
+      console.log(
+        `Nome: ${paciente.nome} CPF: ${paciente.cpf} Data de Nascimento ${paciente.dataNascimento}`
+      );
+    });
   }
-  listarPacientesPorNome(){
-    console.log("Lista de pacientes ordenada por nome:")
+  listarPacientesPorNome() {
+    console.log("Lista de pacientes ordenada por nome:");
 
-    const ordenacao = this.listaPacientes.slice().sort((a, b)=> {
-      return a.nome.localeCompare(b.nome)
-    }) 
-    ordenacao.forEach((paciente)=> {
-      console.log(`Nome: ${paciente.nome} CPF: ${paciente.cpf} Data de Nascimento ${paciente.dataNascimento}`)
-    })
+    const ordenacao = this.listaPacientes.slice().sort((a, b) => {
+      return a.nome.localeCompare(b.nome);
+    });
+    ordenacao.forEach((paciente) => {
+      console.log(
+        `Nome: ${paciente.nome} CPF: ${paciente.cpf} Data de Nascimento ${paciente.dataNascimento}`
+      );
+    });
   }
 
-  excluirPaciente(cpf){
-    const indice = this.listaPacientes.findIndex((paciente)=> paciente.cpf === cpf);
-    if(indice !== -1){
-        this.listaPacientes.splice(indice, 1)
-        return true;
-    }else{
-        return false
+  excluirPaciente(cpf) {
+    const indice = this.listaPacientes.findIndex(
+      (paciente) => paciente.cpf === cpf
+    );
+    if (indice !== -1) {
+      this.listaPacientes.splice(indice, 1);
+      return true;
+    } else {
+      return false;
     }
   }
-
 }
 
 export async function criarPacienteInterativo(controller) {

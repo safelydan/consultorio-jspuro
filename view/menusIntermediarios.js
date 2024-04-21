@@ -69,13 +69,13 @@ export function cadastrarPaciente() {
         type: "input",
         name: "dataNascimento",
         message: "Data de Nascimento do paciente (DD/MM/AAAA): ",
-        validate: function(dataNascimento){
-            if (!(/^\d{2}\/\d{2}\/\d{4}$/.test(dataNascimento))) {
-                return "Data de nascimento no formato inválido. Por favor, digite no formato: DD/MM/AAAA";
-            }
-            return true;
-        }
-    }
+        validate: function (dataNascimento) {
+          if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dataNascimento)) {
+            return "Data de nascimento no formato inválido. Por favor, digite no formato: DD/MM/AAAA";
+          }
+          return true;
+        },
+      },
     ])
     .then((respostas) => {
       const { nome, cpf, dataNascimento } = respostas;
@@ -84,42 +84,41 @@ export function cadastrarPaciente() {
     });
 }
 
-export async function excluirPaciente(){
+export async function excluirPaciente() {
   const resposta = await inquirer.prompt({
     type: "input",
     name: "cpf",
-    message: "Digite o CPF do paciente que deseja excluir: ", 
+    message: "Digite o CPF do paciente que deseja excluir: ",
     validate: function (cpf) {
       if (!/^\d{11}$/.test(cpf)) {
         return "CPF inválido. Por favor digite corretamente";
       }
       return true;
     },
-  })
-  const {cpf: cpfParaExcluir} = resposta;
-  if(pacienteController.excluirPaciente(cpfParaExcluir)){
-    console.log('Paciente excluido com sucesso')
-  }else{
-    console.log("Paciente nao encontrado")
+  });
+  const { cpf: cpfParaExcluir } = resposta;
+  if (pacienteController.excluirPaciente(cpfParaExcluir)) {
+    console.log("Paciente excluido com sucesso");
+  } else {
+    console.log("Paciente nao encontrado");
   }
-  mainMenu()
-} 
+  mainMenu();
+}
 
 function listarPacientes() {
   pacienteController.listarPacientes();
   mainMenu();
 }
 
-function listarPacientesPorCPF(){
+function listarPacientesPorCPF() {
   pacienteController.listarPacientesPorCPF();
   mainMenu();
 }
 
-function listarPacientesPorNome(){
+function listarPacientesPorNome() {
   pacienteController.listarPacientesPorNome();
   mainMenu();
 }
-
 
 export async function menuAgenda() {
   const resposta = await inquirer.prompt({
