@@ -28,7 +28,7 @@ export async function menuCadastro() {
       await excluirPaciente();
       break;
     case "3-Listar pacientes (ordenado por CPF)":
-      listarPacientes();
+      listarPacientesPorCPF();
       break;
     case "4-Listar pacientes (ordenado por Nome)":
       listarPacientes();
@@ -107,6 +107,11 @@ export async function excluirPaciente(){
 
 function listarPacientes() {
   pacienteController.listarPacientes();
+  mainMenu();
+}
+
+function listarPacientesPorCPF(){
+  pacienteController.listarPacientesPorCPF();
   mainMenu();
 }
 

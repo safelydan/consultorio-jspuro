@@ -44,6 +44,25 @@ class PacienteController {
         `Nome: ${paciente.nome}, CPF: ${paciente.cpf}, Data de Nascimento: ${paciente.dataNascimento}`
       );
     });
+    
+  }
+
+  listarPacientesPorCPF(){
+    console.log("Lista de pacientes ordenada por CPF:")
+
+    const ordenacao = this.listaPacientes.slice().sort((a, b)=> {
+      return a.cpf.localeCompare(b.cpf)
+    }) 
+    ordenacao.forEach((paciente)=> {
+      console.log(`Nome: ${paciente.nome} CPF: ${paciente.cpf} Data de Nascimento ${paciente.dataNascimento}`)
+    })
+  }
+
+  listarPacientesPorNome(){
+    console.log("Lista de pacientes ordenada por CPF:")
+    this.listaPacientes.forEach((paciente)=> {
+      console.log(`Nome: ${paciente.nome} CPF: ${paciente.cpf} Data de Nascimento ${paciente.dataNascimento}`)
+    })
   }
 
   excluirPaciente(cpf){
