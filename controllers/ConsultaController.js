@@ -1,4 +1,4 @@
-const Consulta = require('./Consulta');
+import Consulta from '../models/Consulta.js';
 
 class ConsultasController {
     constructor() {
@@ -19,4 +19,4 @@ class ConsultasController {
     }
 }
 
-module.exports = ConsultasController;
+export default ConsultasController;

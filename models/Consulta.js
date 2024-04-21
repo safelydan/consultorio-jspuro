@@ -7,4 +7,4 @@ class Consulta {
     }
 }
 
-module.exports = Consulta;
+export default Consulta;
