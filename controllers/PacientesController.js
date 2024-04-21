@@ -1,5 +1,5 @@
 import Paciente from '../models/Paciente.js';
-import inquirer from 'inquirer';
+import { cadastrarPaciente } from '../view/menusIntermediarios.js';
 
 class PacienteController {
     constructor() {
@@ -8,6 +8,22 @@ class PacienteController {
 
     adicionarPaciente(nome, cpf, dataNascimento) {
         const novoPaciente = new Paciente(nome, cpf, dataNascimento);
+        
+        if(!novoPaciente.validarNome(nome)){
+            console.log("O nome deve ter ao menos 5 caracteres")
+            return false
+        }
+
+        if(!novoPaciente.validarCPF(cpf)){
+            console.log("CPF inválido. Por favor digite corretamente")
+            return false
+        }
+
+        if(!novoPaciente.validarIdadeMinima(13)){
+            console.log("Erro: o paciente deve ter pelo menos 13 anos.")
+            return false
+        }
+  
         this.listaPacientes.push(novoPaciente);
         console.log(`Paciente ${nome} adicionado.`);
     }
@@ -21,22 +37,8 @@ class PacienteController {
 }
 
 export async function criarPacienteInterativo(controller){
-    const respostas = await inquirer.prompt([
-        {type: "input",
-        name: "cpf",
-        message: "CPF: "
-    },
-    {type: "input",
-        name: "nome",
-        message: "Nome"
-    },
-    {type: "input",
-        name: "dataNascimento",
-        message: "Data de nascimento: "
-    },
-    ]);
     
-    const {nome, cpf, dataNascimento} = respostas;
+    const {nome, cpf, dataNascimento} = cadastrarPaciente.respostas;
     const pacienteController = controller;
     const novoPaciente = new Paciente(nome, cpf, dataNascimento);
     pacienteController.adicionarPaciente(novoPaciente);

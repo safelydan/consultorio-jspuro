@@ -6,7 +6,6 @@ import { mainMenu } from "./menuPrincipal.js";
 const pacienteController = new PacienteController();
 const consultasController = new ConsultasController();
 
-
 export async function menuCadastro() {
   const resposta = await inquirer.prompt({
     type: "list",
@@ -38,16 +37,42 @@ export async function menuCadastro() {
   }
 }
 
-function cadastrarPaciente() {
+export function cadastrarPaciente() {
   inquirer
     .prompt([
-      { type: "input", name: "nome", message: "Nome do paciente: " },
-      { type: "input", name: "cpf", message: "CPF do paciente: " },
+      {
+        type: "input",
+        name: "nome",
+        message: "Nome do paciente: ",
+        validate: function (nome) {
+          if (nome.trim().length <= 4) {
+            return "O nome deve ter ao menos 5 caracteres";
+          }
+          return true;
+        },
+      },
+      {
+        type: "input",
+        name: "cpf",
+        message: "CPF do paciente: ",
+        validate: function (cpf) {
+          if (!/^\d{11}$/.test(cpf)) {
+            return "CPF inválido. Por favor digite corretamente";
+          }
+          return true;
+        },
+      },
       {
         type: "input",
         name: "dataNascimento",
         message: "Data de Nascimento do paciente (DD/MM/AAAA): ",
-      },
+        validate: function(dataNascimento){
+            if (!(/^\d{2}\/\d{2}\/\d{4}$/.test(dataNascimento))) {
+                return "Data de nascimento no formato inválido. Por favor, digite no formato: DD/MM/AAAA";
+            }
+            return true;
+        }
+    }
     ])
     .then((respostas) => {
       const { nome, cpf, dataNascimento } = respostas;
@@ -88,51 +113,50 @@ export async function menuAgenda() {
   }
 }
 
-
 function agendarConsulta() {
-    inquirer
-      .prompt([{ type: "input", name: "cpf", message: "CPF do paciente: " }])
-      .then((respostas) => {
-        const paciente = pacienteController.listaPacientes.find(
-          (p) => p.cpf === respostas.cpf
-        );
-        if (paciente) {
-          inquirer
-            .prompt([
-              {
-                type: "input",
-                name: "data",
-                message: "Data da consulta (DD/MM/AAAA): ",
-              },
-              {
-                type: "input",
-                name: "horaInicial",
-                message: "Hora inicial da consulta (HH:MM): ",
-              },
-              {
-                type: "input",
-                name: "horaFinal",
-                message: "Hora final da consulta (HH:MM): ",
-              },
-            ])
-            .then((respostas) => {
-              const { data, horaInicial, horaFinal } = respostas;
-              consultasController.agendarConsulta(
-                paciente,
-                data,
-                horaInicial,
-                horaFinal
-              );
-              mainMenu();
-            });
-        } else {
-          console.log(`Paciente com CPF ${respostas.cpf} não encontrado.`);
-          mainMenu();
-        }
-      });
-  }
-  
-  function listarConsultas() {
-    consultasController.listarConsultas();
-    mainMenu();
-  }
+  inquirer
+    .prompt([{ type: "input", name: "cpf", message: "CPF do paciente: " }])
+    .then((respostas) => {
+      const paciente = pacienteController.listaPacientes.find(
+        (p) => p.cpf === respostas.cpf
+      );
+      if (paciente) {
+        inquirer
+          .prompt([
+            {
+              type: "input",
+              name: "data",
+              message: "Data da consulta (DD/MM/AAAA): ",
+            },
+            {
+              type: "input",
+              name: "horaInicial",
+              message: "Hora inicial da consulta (HH:MM): ",
+            },
+            {
+              type: "input",
+              name: "horaFinal",
+              message: "Hora final da consulta (HH:MM): ",
+            },
+          ])
+          .then((respostas) => {
+            const { data, horaInicial, horaFinal } = respostas;
+            consultasController.agendarConsulta(
+              paciente,
+              data,
+              horaInicial,
+              horaFinal
+            );
+            mainMenu();
+          });
+      } else {
+        console.log(`Paciente com CPF ${respostas.cpf} não encontrado.`);
+        mainMenu();
+      }
+    });
+}
+
+function listarConsultas() {
+  consultasController.listarConsultas();
+  mainMenu();
+}
