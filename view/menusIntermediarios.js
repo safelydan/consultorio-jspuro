@@ -149,7 +149,19 @@ export async function menuAgenda() {
 
 function agendarConsulta() {
   inquirer
-    .prompt([{ type: "input", name: "cpf", message: "CPF do paciente: " }])
+    .prompt([
+      {
+        type: "input",
+        name: "cpf",
+        message: "CPF do paciente: ",
+        validate: function (cpf) {
+          if (!/^\d{11}$/.test(cpf)) {
+            return "CPF inválido. Por favor digite corretamente";
+          }
+          return true;
+        },
+      },
+    ])
     .then((respostas) => {
       const paciente = pacienteController.listaPacientes.find(
         (p) => p.cpf === respostas.cpf
@@ -161,16 +173,34 @@ function agendarConsulta() {
               type: "input",
               name: "data",
               message: "Data da consulta (DD/MM/AAAA): ",
+              validate: function (dataNascimento) {
+                if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dataNascimento)) {
+                  return "Data de nascimento no formato inválido. Por favor, digite no formato: DD/MM/AAAA";
+                }
+                return true;
+              },
             },
             {
               type: "input",
               name: "horaInicial",
               message: "Hora inicial da consulta (HH:MM): ",
+              validate: function (horaInicial) {
+                if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(horaInicial)) {
+                  return "Formato de hora inválido. Use o formato HH:MM.";
+                }
+                return true;
+              },
             },
             {
               type: "input",
               name: "horaFinal",
               message: "Hora final da consulta (HH:MM): ",
+              validate: function (horaInicial) {
+                if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(horaInicial)) {
+                  return "Formato de hora inválido. Use o formato HH:MM.";
+                }
+                return true;
+              },
             },
           ])
           .then((respostas) => {
