@@ -5,6 +5,22 @@ class Consulta {
     this.horaInicial = horaInicial;
     this.horaFinal = horaFinal;
   }
+
+  validarConsulta(){
+
+  }
+
+  validarHoraInicial(){
+
+  }
+
+  validarHoraFinal(){
+
+  }
+
+  validarAgendamentoFuturo(){
+    
+  }
 }
 
 export default Consulta;

@@ -34,7 +34,7 @@ export async function menuCadastro() {
       listarPacientesPorNome();
       break;
     case "5-Voltar p/ menu principal":
-      return;
+      mainMenu()
     default:
       console.log("Opção inválida. Tente novamente.");
   }
@@ -143,7 +143,7 @@ export async function menuAgenda() {
       listarConsultas();
       break;
     case "4-Voltar p/ menu principal":
-      return;
+      mainMenu()
   }
 }
 

@@ -1,8 +1,5 @@
 import Paciente from "../models/Paciente.js";
-import {
-  cadastrarPaciente,
-  excluirPaciente,
-} from "../view/menusIntermediarios.js";
+import { cadastrarPaciente} from "../view/menusIntermediarios.js";
 
 class PacienteController {
   constructor() {
